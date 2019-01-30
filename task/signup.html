@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap -->
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<section>
+	<div class="container">
+  <h2>Signup</h2>
+    	<div class="col-md-6" style="border:1px solid #e1e1e1;padding: 15px;">   
+            <form method="POST" id="targetSignup">
+                <p id="signup_error"></p>
+	                <div class="form-group">
+	                	<label>User name</label>
+	                	<input type="text" id="signup_user">
+	                </div>
+	                <div class="form-group">
+	                	<label>Password</label>
+	                	<input type="password" id="signup_password">
+	                </div>
+	                <div class="form-group">
+	                	<label>Email</label>
+	                	<input type="email" id="signup_email">
+	                </div>
+
+	                <div class="col-md-2">
+            			<button id="signup_btn" type="submit" class="btn btn-primary">signup</button>
+	                </div>
+	                <div class="col-md-3">
+            			<a href="index.html">Already register</a>
+	                </div>
+            </form>
+    	</div>
+	        </div>
+    </section>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- <script src="jquery-2.2.3.min.js"></script> -->
+<script src="js/bootstrap.min.js"></script>
+<script>
+        $(document).ready(function() {
+           
+           $( "#targetSignup" ).submit(function( event ) {
+            var user=$ ("#signup_user") .val();
+            var password=$ ("#signup_password") .val();
+            var email=$ ("#signup_email") .val();
+
+            if(user==""){
+            	$("#signup_error").html("please enter username");
+             return false;}
+            if(password==""){
+            	$("#signup_error").html("please enter password");
+             return false;}
+            if(email==""){
+            	$("#signup_error").html("please enter email");
+             return false;}
+
+       
+
+            $.ajax({
+                type:"POST",
+                url:"ajax.add.php",
+                data: "formName=signup" + "&user=" + user +"&password=" + password +"&email=" + email,
+                success:function(result){
+                if(result=="1"){
+                    window.location.href = "index.html";
+                }
+                else{
+                    $("#signup_error").html("insert failed:" + result);
+                }
+
+            }
+            });
+            event.preventDefault();
+            });
+            
+           
+        });
+
+        </script>
+</body>
+</html>
